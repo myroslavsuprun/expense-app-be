@@ -35,7 +35,7 @@ model Category {
   createdAt DateTime @default(now()) @map("created_at")
 
   userId String @map("user_id")
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   transactions Transaction[]
 
@@ -51,10 +51,10 @@ model Transaction {
   createdAt   DateTime        @default(now()) @map("created_at")
 
   userId String @map("user_id")
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  categoryId String   @map("category_id")
-  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String?   @map("category_id")
+  category   Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
   @@map("transactions")
 }
@@ -71,7 +71,7 @@ model AuditLog {
   created_at DateTime @default(now())
 
   userId String @map("user_id")
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("audit_logs")
 }
