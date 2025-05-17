@@ -17,8 +17,6 @@ addDIResolverName(create${namePascal}Handler, "${nameCamel}Handler");
 import { FastifyInstance } from "fastify";
 import { ${namePascal}Handler } from "./${nameKebab}.handler.js";
 
-enum ${namePascal}Routes {}
-
 export const create${namePascal}Routes = (
     fastify: FastifyInstance,
     ${nameCamel}Handler: ${namePascal}Handler

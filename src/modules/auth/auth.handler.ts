@@ -25,4 +25,3 @@ export const createAuthHandler = (authService: AuthService): AuthHandler => {
 };
 
 addDIResolverName(createAuthHandler, "authHandler");
-

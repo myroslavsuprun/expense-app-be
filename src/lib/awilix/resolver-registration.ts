@@ -1,4 +1,4 @@
-import { Cradle } from "@/types/di-container.type.js";
+import { Cradle } from "@/types/cradle.type.js";
 import {
     asFunction,
     AwilixContainer,

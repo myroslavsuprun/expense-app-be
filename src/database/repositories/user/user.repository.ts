@@ -14,6 +14,16 @@ export const defaultAuthUserSelect = {
     updatedAt: true,
 } satisfies Prisma.UserSelect;
 
+export const defaultUserSelect = {
+    id: true,
+    firstName: true,
+    lastName: true,
+    email: true,
+    role: true,
+    createdAt: true,
+    updatedAt: true,
+} satisfies Prisma.UserSelect;
+
 export type UserRepository = BaseRepository<"user"> & {
     findUniqueOrFail: FindUniqueOrFail<
         Prisma.UserFindUniqueArgs,
@@ -39,4 +49,3 @@ export const createUserRepository = (prisma: PrismaClient): UserRepository => {
 };
 
 addDIResolverName(createUserRepository, "userRepository");
-

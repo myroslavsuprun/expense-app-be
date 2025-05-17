@@ -15,6 +15,9 @@ export const createAuthRoutes = (
         "/sign-up",
         {
             schema: {
+                tags: ["Auth"],
+
+                summary: "Register a new user",
                 body: signUpBodySchema,
                 response: {
                     200: signUpResponseSchema,
@@ -28,6 +31,9 @@ export const createAuthRoutes = (
         "/sign-in",
         {
             schema: {
+                tags: ["Auth"],
+                summary: "Sign in user",
+
                 body: signInBodySchema,
                 response: {
                     200: signInResponseSchema,
