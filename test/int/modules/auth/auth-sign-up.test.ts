@@ -11,7 +11,7 @@ describe("POST /api/auth/sign-up", () => {
     beforeEach(async () => {
         server = await configureServer();
 
-        return async () => {
+        return async () => {1
             await server.close();
         };
     });
