@@ -7,6 +7,14 @@ export type BodyRequest<T> = (
     rp: FastifyReply
 ) => Promise<void>;
 
+export type BodyParamsRequest<T, U> = (
+    r: FastifyRequest<{
+        Body: T;
+        Params: U;
+    }>,
+    rp: FastifyReply
+) => Promise<void>;
+
 export type RequestResponse = (
     r: FastifyRequest,
     rp: FastifyReply

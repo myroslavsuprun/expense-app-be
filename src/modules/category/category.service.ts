@@ -55,22 +55,30 @@ export const createCategoryService = (
             limit = PAGINATION_DEFAULT.LIMIT,
         } = query;
 
-        const categories = await categoryRepository.findMany({
-            where: {
-                userId,
-            },
-            select: defaultCategorySelect,
-            take: limit,
-            skip: countOffset(page, limit),
-            orderBy: {
-                name: "asc",
-            },
-        });
+        const [categories, total] = await Promise.all([
+            categoryRepository.findMany({
+                where: {
+                    userId,
+                },
+                select: defaultCategorySelect,
+                take: limit,
+                skip: countOffset(page, limit),
+                orderBy: {
+                    name: "asc",
+                },
+            }),
+            categoryRepository.count({
+                where: {
+                    userId,
+                },
+            }),
+        ]);
 
         return {
             message: "Categories fetched successfully.",
             data: {
                 categories,
+                total,
             },
         };
     },
@@ -96,4 +104,3 @@ export const createCategoryService = (
 });
 
 addDIResolverName(createCategoryService, "categoryService");
-
