@@ -4,7 +4,7 @@ import path from "path";
 export const extendCradle = (namePascal, nameCamel, nameKebab) => {
     const diContainerPath = path.join(
         process.cwd(),
-        "src/types/di-container.type.ts"
+        "src/types/cradle.type.ts"
     );
 
     let diContent = fs.readFileSync(diContainerPath, "utf8");
