@@ -68,7 +68,7 @@ describe("PATCH /api/transactions/:id", () => {
             amount: 400,
             type: TransactionType.EXPENSE,
             categoryId,
-            date: new Date(), // FIX: pass Date object, not ISO string
+            date: new Date(),
         };
 
         const txnRes = await server.inject({

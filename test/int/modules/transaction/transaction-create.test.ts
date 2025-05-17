@@ -71,7 +71,7 @@ describe("POST /api/transactions", () => {
             amount: 100,
             type: TransactionType.EXPENSE,
             categoryId,
-            date: new Date(), // FIX: pass Date object, not ISO string
+            date: new Date(),
         };
 
         const response = await server.inject({
@@ -102,7 +102,7 @@ describe("POST /api/transactions", () => {
             amount: 50,
             type: TransactionType.EXPENSE,
             categoryId,
-            date: new Date(), // FIX: pass Date object, not ISO string
+            date: new Date(),
         };
 
         const response = await server.inject({

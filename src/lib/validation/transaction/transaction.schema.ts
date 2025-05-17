@@ -42,7 +42,7 @@ export const createTransactionBodySchema = z.object({
     amount: z.number().int(),
     type: z.nativeEnum(TransactionType),
     categoryId: z.string().uuid().nullable(),
-    date: z.date(),
+    date: z.coerce.date(),
 });
 
 export type CreateTransactionBody = z.infer<typeof createTransactionBodySchema>;
@@ -79,7 +79,7 @@ export const updateTransactionBodySchema = z.object({
     amount: z.number().int().optional(),
     type: z.nativeEnum(TransactionType).optional(),
     categoryId: z.string().uuid().nullable().optional(),
-    date: z.date().optional(),
+    date: z.coerce.date().optional(),
 });
 
 export type UpdateTransactionBody = z.infer<typeof updateTransactionBodySchema>;

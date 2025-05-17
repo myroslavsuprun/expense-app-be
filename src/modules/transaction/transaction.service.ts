@@ -150,6 +150,16 @@ export const createTransactionService = (
     },
 
     updateTransaction: async ({ params, userId, payload }) => {
+        await transactionRepository.findUniqueOrFail({
+            where: {
+                id: params.id,
+                userId,
+            },
+            select: {
+                id: true,
+            },
+        });
+
         if (payload.categoryId) {
             await categoryRepository.findUniqueOrFail({
                 where: {

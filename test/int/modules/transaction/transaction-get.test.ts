@@ -64,7 +64,7 @@ describe("GET /api/transactions", () => {
             amount: 200,
             type: TransactionType.INCOME,
             categoryId,
-            date: new Date(), // FIX: pass Date object, not ISO string
+            date: new Date(),
         };
 
         await server.inject({
