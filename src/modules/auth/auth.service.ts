@@ -1,21 +1,28 @@
 import { JWT } from "@fastify/jwt";
 import { UserRole } from "@prisma/client";
 import { hashing } from "@/lib/hashing/hashing.js";
-import { ConflictError } from "@/lib/errors/errors.js";
 import { ACCES_TOKEN_EXPIRES_IN } from "./auth.const.js";
 import { addDIResolverName } from "@/lib/awilix/awilix.js";
 import {
-    AccessTokenJWT,
-    SignUpBody,
-    SignUpResponse,
-} from "@/lib/validation/auth/auth.schema.js";
+    BadRequestError,
+    ConflictError,
+    NotFoundError,
+} from "@/lib/errors/errors.js";
 import {
     defaultAuthUserSelect,
     UserRepository,
 } from "@/database/repositories/user/user.repository.js";
+import {
+    AccessTokenJWT,
+    SignInBody,
+    SignInResponse,
+    SignUpBody,
+    SignUpResponse,
+} from "@/lib/validation/auth/auth.schema.js";
 
 export type AuthService = {
     signUp: (p: SignUpBody) => Promise<SignUpResponse>;
+    signIn: (p: SignInBody) => Promise<SignInResponse>;
 };
 
 export const createauthService = (
@@ -64,6 +71,59 @@ export const createauthService = (
             message: "User created successfully.",
             data: {
                 user: createdUser,
+                token,
+            },
+        };
+    },
+
+    signIn: async (p: SignInBody) => {
+        const user = await userRepository.findUnique({
+            where: {
+                email: p.email,
+            },
+            select: {
+                id: true,
+                password: true,
+            },
+        });
+
+        if (!user) {
+            throw new BadRequestError("Invalid email or password.");
+        }
+
+        const isPasswordValid = await hashing.comparePassword(
+            p.password,
+            user.password
+        );
+
+        if (!isPasswordValid) {
+            throw new BadRequestError("Invalid email or password.");
+        }
+
+        const tokenPayload: AccessTokenJWT = {
+            id: user.id,
+            type: "access",
+        };
+
+        const token = jwt.sign(tokenPayload, {
+            expiresIn: ACCES_TOKEN_EXPIRES_IN,
+        });
+
+        const userData = await userRepository.findUnique({
+            where: {
+                id: user.id,
+            },
+            select: defaultAuthUserSelect,
+        });
+
+        if (!userData) {
+            throw new NotFoundError("User not found.");
+        }
+
+        return {
+            message: "User signed in successfully.",
+            data: {
+                user: userData,
                 token,
             },
         };

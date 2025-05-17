@@ -30,6 +30,23 @@ export const signUpResponseSchema = z.object({
 
 export type SignUpResponse = z.infer<typeof signUpResponseSchema>;
 
+export const signInBodySchema = z.object({
+    email: z.string().email(),
+    password: z.string(),
+});
+
+export type SignInBody = z.infer<typeof signInBodySchema>;
+
+export const signInResponseSchema = z.object({
+    message: z.string(),
+    data: z.object({
+        user: authUserSchema,
+        token: z.string(),
+    }),
+});
+
+export type SignInResponse = z.infer<typeof signInResponseSchema>;
+
 export const accessTokenJWTSchema = z.object({
     id: z.string(),
     type: z.literal("access"),

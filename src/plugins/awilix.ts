@@ -23,6 +23,7 @@ const configureAwilix = async (fastify: FastifyInstance) => {
         log: asValue(fastify.log),
         prisma: asValue(fastify.prisma),
         config: asValue(fastify.config),
+        jwt: asValue(fastify.jwt),
     });
 
     // Register dependencies from the application: repositories, services, route handlers
