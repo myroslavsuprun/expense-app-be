@@ -1,0 +1,8 @@
+import { FastifyReply, FastifyRequest } from "fastify";
+
+export type BodyRequest<T> = (
+    r: FastifyRequest<{
+        Body: T;
+    }>,
+    rp: FastifyReply
+) => Promise<void>;
