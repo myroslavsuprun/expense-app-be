@@ -11,3 +11,17 @@ export type RequestResponse = (
     r: FastifyRequest,
     rp: FastifyReply
 ) => Promise<void>;
+
+export type QueryRequest<T> = (
+    r: FastifyRequest<{
+        Querystring: T;
+    }>,
+    rp: FastifyReply
+) => Promise<void>;
+
+export type ParamsRequest<T> = (
+    r: FastifyRequest<{
+        Params: T;
+    }>,
+    rp: FastifyReply
+) => Promise<void>;
