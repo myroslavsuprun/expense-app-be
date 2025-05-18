@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+    name: expense-tracker-api-ingress
+    annotations:
+        kubernetes.io/ingress.class: "alb"
+        alb.ingress.kubernetes.io/scheme: "internet-facing"
+        alb.ingress.kubernetes.io/target-type: "ip"
+        alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80,"HTTPS":443}]'
+        alb.ingress.kubernetes.io/ssl-redirect: "443"
+        alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:us-east-1:706447098461:certificate/0e1f25a6-5f4c-4f93-af31-68b8e7443ac6"
+        alb.ingress.kubernetes.io/healthcheck-path: /api/ping
+spec:
+    rules:
+        - host: "expense-tracker.checkpoint.lat"
+          http:
+              paths:
+                  - path: /
+                    pathType: Prefix
+                    backend:
+                        service:
+                            name: expense-tracker-api
+                            port:
+                                number: 3001
