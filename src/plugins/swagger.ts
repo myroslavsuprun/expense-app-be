@@ -17,7 +17,24 @@ const configureSwagger = async (fastify: FastifyInstance) => {
                 title: "Fastify template API",
                 version: "0.1.0",
             },
+
+            components: {
+                securitySchemes: {
+                    bearerAuth: {
+                        type: "http",
+                        scheme: "bearer",
+                        bearerFormat: "JWT",
+                    },
+                },
+            },
+
+            security: [
+                {
+                    bearerAuth: [],
+                },
+            ],
         },
+
         transform: fastifyTypeProviderZod.jsonSchemaTransform,
     });
 
