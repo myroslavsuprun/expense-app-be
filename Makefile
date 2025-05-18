@@ -13,4 +13,14 @@ migrate-create:
 	$(container_command) npm run prisma:migrate:create
 	@echo "Migration created"
 
+ACCOUNT_ID := $(shell aws sts get-caller-identity --query Account --output text)
+REGION := us-east-1
+REPO_NAME := expense-tracker-api
+ECR_URI := $(ACCOUNT_ID).dkr.ecr.$(REGION).amazonaws.com/$(REPO_NAME)
+
+ecr-update:
+	docker build --platform linux/amd64 -t $(REPO_NAME) -f Dockerfile.prod .
+	aws ecr get-login-password --region $(REGION) | docker login --username AWS --password-stdin $(ECR_URI)
+	docker tag $(REPO_NAME):latest $(ECR_URI):latest
+	docker push $(ECR_URI):latest
 
