@@ -18,9 +18,6 @@ export const DEFAULT_CATEGORIES: { name: string }[] = [
         name: "Eating Out",
     },
     {
-        name: "Education",
-    },
-    {
         name: "Subscription",
     },
     {

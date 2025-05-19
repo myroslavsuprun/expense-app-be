@@ -1,8 +1,25 @@
 /// <reference types="./types/index.d.ts" />
 import closeWithGrace from "close-with-grace";
+import { execSync } from "child_process";
 import { configureServer } from "./server.js";
 
+const runMigrations = () => {
+    console.log("Running database migrations...");
+
+    try {
+        execSync("npm run prisma:deploy");
+
+        console.log("Migrations completed successfully");
+    } catch (error) {
+        console.error("Migration failed:", error);
+        process.exit(1);
+    }
+};
+
 const main = async () => {
+    // Run migrations before starting the server
+    runMigrations();
+
     const fastify = await configureServer();
 
     const address = await fastify.listen({
@@ -30,7 +47,6 @@ const main = async () => {
 };
 
 main().catch((err) => {
-    // eslint-disable-next-line no-console
     console.error(err);
 
     process.exit(1);

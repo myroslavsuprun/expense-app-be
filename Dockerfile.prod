@@ -12,6 +12,9 @@ WORKDIR /app
 COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/build ./build
 COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/src/database/prisma ./src/database/prisma
+
+RUN npm install prisma --no-save
 
 ENV NODE_ENV=production
 ENV NODE_PATH=./build
